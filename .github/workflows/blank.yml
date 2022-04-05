@@ -30,8 +30,8 @@ jobs:
       - name: Download Config
         run: |
           git clone https://github.com/coolsnowwolf/lede
-          git clone https://github.com/jarieshan/AX6s-lede.git
-          cp AX6s-lede/ax6s.yaml ./lede
+          git clone https://github.com/jarieshan/AX6S-lede
+          cp AX6S-lede/ax6s.config ./lede/
       
       - name: Build Openwrt
         working-directory: ./lede
