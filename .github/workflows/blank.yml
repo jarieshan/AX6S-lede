@@ -26,18 +26,25 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install Dep
         run: sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
-
-      - name: Download Config
+          
+      - name: Download LEDE Repo and Config
         run: |
           git clone https://github.com/coolsnowwolf/lede
           git clone https://github.com/jarieshan/AX6S-lede
           cp AX6S-lede/ax6s.config ./lede/
       
-      - name: Build Openwrt
+      - name: Run any Script
         working-directory: ./lede
-        run: |
-          scripts/feeds update -a
-          scripts/feeds install -a
-          make defconfig
-          make -j8 download V=s
-          make -j$(($(nproc) + 1)) V=s
+        run: scripts/feeds update -a && scripts/feeds install -a
+        
+      - name: Build Config
+        working-directory: ./lede
+        run : make defconfig
+        
+      - name: Download Lib
+        working-directory: ./lede
+        run: make -j8 download V=s
+      
+      - name: Build AX6S Firmware
+        working-directory: ./lede
+        run: make -j$(($(nproc) + 1)) V=s
