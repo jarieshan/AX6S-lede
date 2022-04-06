@@ -31,7 +31,6 @@ jobs:
         run: |
           git clone https://github.com/coolsnowwolf/lede
           git clone https://github.com/jarieshan/AX6S-lede
-          cp AX6S-lede/ax6s.config ./lede/
       
       - name: Run any Script
         working-directory: ./lede
@@ -39,7 +38,10 @@ jobs:
         
       - name: Build Config
         working-directory: ./lede
-        run : make defconfig
+        run : |
+          make defconfig
+          rm .config
+          mv ../AX6S-lede/ax6s.config ./.config
         
       - name: Download Lib
         working-directory: ./lede
