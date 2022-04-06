@@ -5,3 +5,13 @@ yum install -y ncurses-devel zlib-devel glibc-devel glibc-devel.i686 glibc.i686 
 
 yum install -y python27 *antlr*
 scl enable python27 bash
+
+
+git clone https://github.com/coolsnowwolf/lede
+cp AX6S-lede/ax6s.config lede/
+cd lede
+./scripts/feeds update -a
+./scripts/feeds install -a
+make defconfig
+make -j8 download
+make -j$(($(nproc) + 1)) V=s
