@@ -32,7 +32,11 @@ jobs:
           git clone https://github.com/coolsnowwolf/lede
           git clone https://github.com/jarieshan/AX6S-lede
       
-      - name: Run any Script
+      - name: Run any Script Step1
+        working-directory: ./lede
+        run: scripts/feeds update -a && scripts/feeds install -a
+        
+      - name: Run any Script Step2
         working-directory: ./lede
         run: scripts/feeds update -a && scripts/feeds install -a
         
@@ -44,7 +48,10 @@ jobs:
           rm .config
           mv ../AX6S-lede/ax6s.config ./.config
         
-      - name: Download Lib
+      - name: Download Lib Step1
+        working-directory: ./lede
+        run: make -j8 download V=s
+      - name: Download Lib Step2
         working-directory: ./lede
         run: make -j8 download V=s
       
