@@ -48,11 +48,11 @@ jobs:
         run: make -j8 download V=s
       
       - name: Build AX6S Firmware
-        working-directory: ./lede
+        working-directory: ./ledes
         run: make -j$(($(nproc) + 1)) V=s
       
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
           name: AX6S LEDE Firmware
-          path: ./lede/bin/
+          path: ./lede/bin/targets/
